@@ -20,11 +20,13 @@ namespace HashTable
             int position =key.GetHashCode() % size;
             return Math.Abs(position);
         }
+
+
         public V Get(K key)
         {
             int position = GetArrayPosition(key);
-            LinkedList<KeyValue<K,V>> LinkedList = map[position];
-            foreach(KeyValue<K,V> map in LinkedList)
+            LinkedList<KeyValue<K, V>> LinkedList = map[position];
+            foreach (KeyValue<K, V> map in LinkedList)
             {
                 if (map.key.Equals(key))
                 {
@@ -41,8 +43,19 @@ namespace HashTable
             LinkedList.AddLast(map);
 
         }
-        
-        
+
+        protected LinkedList<KeyValue<K, V>> GetLinkedList(int position)
+        {
+            LinkedList<KeyValue<K, V>> LinkedList = map[position];
+            if (LinkedList == null)
+            {
+                LinkedList = new LinkedList<KeyValue<K, V>>();
+                map[position] = LinkedList;
+
+            }
+            return LinkedList;
+        }
+
         public struct KeyValue<K, V>
         {
             public K key { get; set; }
